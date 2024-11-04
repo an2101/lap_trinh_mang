@@ -1,114 +1,40 @@
 /*  
-
  * Copyright (c) 2011 University of Kansas
-
- *  
-
- * This program is free software; you can redistribute it and/or modify
-
- * it under the terms of the GNU General Public License version 2 as
-
- * published by the Free Software Foundation;
-
- *  
-
- * This program is distributed in the hope that it will be useful,
-
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-
- * GNU General Public License for more details.
-
- *  
-
- * You should have received a copy of the GNU General Public License
-
- * along with this program; if not, write to the Free Software
-
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
- *  
-
  * Author: Justin Rohrer <rohrej@ittc.ku.edu>
-
- *  
-
  * James P.G. Sterbenz <jpgs@ittc.ku.edu>, director
-
  * ResiliNets Research Group  https://resilinets.org/
-
  * Information and Telecommunication Technology Center (ITTC)
-
  * and Department of Electrical Engineering and Computer Science
-
  * The University of Kansas Lawrence, KS USA.
-
- *  
-
- * Work supported in part by NSF FIND (Future Internet Design) Program
-
- * under grant CNS-0626918 (Postmodern Internet Architecture),
-
- * NSF grant CNS-1050226 (Multilayer Network Resilience Analysis and Experimentation on GENI),
-
- * US Department of Defense (DoD), and ITTC at The University of Kansas.
-
  */
-
-
 
 /*
-
- * This example program allows one to run ns-3 DSDV, AODV, or OLSR under
-
- * a typical random waypoint mobility model.
-
+ * Dự án mô phỏng mạng MANET sử dụng ns-3 với giao thức định tuyến AODV, sử dụng Flow Monitor để phân tích hiệu suất của giao thức và 
+ * NetAnim để mô phỏng và quan sát quá trình giao tiếp giữa các node trong mạng MANET.
  */
 
-
-
-#include "ns3/aodv-module.h"
-
+/*Thêm các thư viện cần thiết cho dự án*/
+#include "ns3/aodv-module.h"/*Thư viện hỗ trợ mô hình mạng AODV*/
 #include "ns3/applications-module.h"
-
 #include "ns3/core-module.h"
-
 #include "ns3/dsdv-module.h"
-
 #include "ns3/dsr-module.h"
-
-#include "ns3/flow-monitor-module.h"
-
+#include "ns3/flow-monitor-module.h"/*Thư viện hỗ trợ flow monitor*/
 #include "ns3/internet-module.h"
-
 #include "ns3/mobility-module.h"
-
 #include "ns3/network-module.h"
-
 #include "ns3/olsr-module.h"
-
 #include "ns3/yans-wifi-helper.h"
-
-#include "ns3/netanim-module.h"  
-
-
-
+#include "ns3/netanim-module.h"  /*Thư viện hỗ trợ netanim*/
 #include <fstream>
-
 #include <iostream>
 
-
-
+/* giúp mã nguồn ngắn gọn và dễ đọc hơn mà không cần
+ * phải chỉ định không gian tên (namespace) của chúng mỗi lần*/
 using namespace ns3;
-
 using namespace dsr;
 
-
-
 NS_LOG_COMPONENT_DEFINE("manet-routing-compare");
-
-
 
 class RoutingExperiment
 
