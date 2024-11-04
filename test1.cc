@@ -11,6 +11,28 @@
 /*
  * Dự án mô phỏng mạng MANET sử dụng ns-3 với giao thức định tuyến AODV, sử dụng Flow Monitor để phân tích hiệu suất của giao thức và 
  * NetAnim để mô phỏng và quan sát quá trình giao tiếp giữa các node trong mạng MANET.
+  Các thành phần chính trong mô hình mạng bao gồm:
+*NodeContainer:
+adhocNodes: Khởi tạo 50 node và lưu trữ tất cả các node này, mô tả các node trong mạng MANET sẽ sử dụng giao thức AODV để giao tiếp.
+*Wifi Helper:
+WifiHelper wifi: Thiết lập các chuẩn WiFi (ở đây là 802.11b) cho các node ad hoc.
+YansWifiPhyHelper wifiPhy và YansWifiChannelHelper wifiChannel: Thiết lập kênh truyền cho mạng không dây sử dụng mô hình FriisPropagationLossModel và ConstantSpeedPropagationDelayModel.
+*Mobility Helper:
+MobilityHelper mobilityAdhoc: Thiết lập mô hình di chuyển cho các node trong mạng MANET sử dụng RandomWaypointMobilityModel. Các node di chuyển ngẫu nhiên trong không gian được xác định bởi giới hạn X (0-300) và Y (0-1500) cùng tốc độ và thời gian dừng được xác định ngẫu nhiên.
+PositionAllocator: Cấp phát vị trí ban đầu cho các node, giúp đảm bảo vị trí của các node được đặt ngẫu nhiên trong không gian xác định.
+*AODV Helper:
+AodvHelper aodv: Khởi tạo giao thức định tuyến AODV. Đây là thành phần chính để thiết lập giao thức cho mô hình mạng MANET.
+Ipv4ListRoutingHelper list và InternetStackHelper internet: Sử dụng list.Add(aodv, 100) để thêm giao thức AODV vào danh sách giao thức định tuyến, và sau đó thiết lập mạng Internet trên các node.
+*Address Helper:
+Ipv4AddressHelper addressAdhoc: Thiết lập địa chỉ IP cho các node trong mạng sử dụng dải địa chỉ 10.1.1.0/24. Mỗi node sẽ có một địa chỉ IP riêng trong mạng ad hoc.
+*OnOffHelper:
+OnOffHelper onoff1: Tạo và cấu hình ứng dụng truyền tải UDP để gửi các gói tin từ các node, được cấu hình để duy trì trạng thái bật trong 1 giây và tắt trong 0 giây.
+Ứng dụng này gửi dữ liệu từ một node đến node đích đã thiết lập qua địa chỉ IP và cổng.
+*FlowMonitor:
+FlowMonitorHelper flowmonHelper và Ptr<FlowMonitor> flowmon: Giúp theo dõi và phân tích các luồng dữ liệu, ghi lại thông tin về các luồng mạng vào file XML manet-routing-compare.flowmon.
+*Animation Interface:
+AnimationInterface anim("manet-routing-compare.xml"): Tạo một file XML chứa thông tin để sử dụng với NetAnim nhằm mô phỏng và quan sát quá trình giao tiếp giữa các node trong mạng MANET.
+
  */
 
 /*Thêm các thư viện cần thiết cho dự án*/
